@@ -1,5 +1,5 @@
 // Copyright 2022 VladislavRZ <rzhevskii_vladislav@mail.ru>
-#include "Addition.hpp"
+#include "CmdArgs.hpp"
 
 bool parse_cmd(int argc, char* argv[], CmdArgs& cmd_args) {
   // Add options
@@ -9,8 +9,8 @@ bool parse_cmd(int argc, char* argv[], CmdArgs& cmd_args) {
       po::value<std::string>(&cmd_args.log_lvl)->default_value("error"),
       "info|warning|error")(
       "thread-count",
-      po::value<unsigned int>(&cmd_args.threads)->default_value(3),
-      "count of threads")(
+      po::value<unsigned int>(&cmd_args.threads_count)->default_value(3),
+      "count of threads_count")(
       "output",
       po::value<std::string>(&cmd_args.output)->default_value("OutputDB"),
       "path/to/output");
@@ -55,7 +55,7 @@ bool check_args(CmdArgs& cmd_args) {
     return false;
   }
 
-  if (cmd_args.threads == 0) {
+  if (cmd_args.threads_count == 0) {
     BOOST_LOG_TRIVIAL(warning) << "Warning: Threads count can't be zero.";
     return false;
   }

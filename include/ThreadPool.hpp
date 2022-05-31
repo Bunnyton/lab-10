@@ -27,7 +27,7 @@ class ThreadPool {
   ~ThreadPool();
 
  private:
-  // need to keep track of threads so we can join them
+  // need to keep track of threads_count so we can join them
   std::vector<std::thread> workers;
   // the task queue
   std::queue<std::function<void()>> tasks;
@@ -81,7 +81,7 @@ auto ThreadPool::enqueue(F&& f, Args&&... args)
   return res;
 }
 
-// the destructor joins all threads
+// the destructor joins all threads_count
 inline ThreadPool::~ThreadPool() {
   {
     std::unique_lock<std::mutex> lock(queue_mutex);

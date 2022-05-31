@@ -4,7 +4,6 @@ int main(int argc, char* argv[]) {
   try {
     CmdArgs cmd_args;
 
-    // Parse command line arguments
     log_init();
     if (!parse_cmd(argc, argv, cmd_args)) return 0;
     set_log_lvl(cmd_args);

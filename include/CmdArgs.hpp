@@ -23,7 +23,7 @@ struct CmdArgs {
   std::string log_lvl;
   std::string output;
   std::string input;
-  unsigned int threads;
+  unsigned int threads_count;
 };
 
 bool parse_cmd(int argc, char* argv[], CmdArgs& cmd_args);

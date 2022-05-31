@@ -12,9 +12,9 @@
 #include <string>
 #include <vector>
 
-#include "../third-party/PicoSHA2/picosha2.h"
+#include "picosha2.h"
 #include "ThreadPool.hpp"
-#include "Addition.hpp"
+#include "CmdArgs.hpp"
 
 using ROCKSDB_NAMESPACE::ColumnFamilyDescriptor;
 using ROCKSDB_NAMESPACE::ColumnFamilyHandle;
@@ -29,11 +29,20 @@ using ROCKSDB_NAMESPACE::WriteBatch;
 using ROCKSDB_NAMESPACE::WriteOptions;
 
 class ChecksumCalc {
- public:
+private:
+  DB* _db;
+  ThreadPool* _pool;
+  std::vector<ColumnFamilyHandle*> _handles;
+  std::vector<std::vector<std::string>> _keys;
+  std::vector<std::vector<std::string>> _values;
+  std::vector<std::vector<std::string>> _hashes;
+  std::mutex _keyval_mutex;
+
+public:
   ChecksumCalc();
   ~ChecksumCalc();
 
- private:
+private:
   void read(const CmdArgs& cmd,
             std::vector<ColumnFamilyDescriptor>& column_families);
   void read_db();
@@ -47,17 +56,10 @@ class ChecksumCalc {
   void checksum();
   std::string get_hash(const std::string& value);
 
- public:
+public:
   void run(const CmdArgs& cmd);
 
- private:
-  DB* _db;
-  ThreadPool* _pool;
-  std::vector<ColumnFamilyHandle*> _handles;
-  std::vector<std::vector<std::string>> _keys;
-  std::vector<std::vector<std::string>> _values;
-  std::vector<std::vector<std::string>> _hashes;
-  std::mutex _keyval_mutex;
+
 };
 
 void print_db(DB* db, const std::vector<ColumnFamilyHandle*>& handles);

@@ -50,7 +50,7 @@ void ChecksumCalc::read(const CmdArgs& cmd,
   // Read keys and values
   BOOST_LOG_TRIVIAL(info) << "Read keys and values from data base: "
                           << cmd.input << ";";
-  _pool = new ThreadPool(cmd.threads);
+  _pool = new ThreadPool(cmd.threads_count);
   read_db();
 
   // Close input DB
