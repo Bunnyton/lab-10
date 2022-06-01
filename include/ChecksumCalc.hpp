@@ -36,7 +36,7 @@ private:
   std::vector<std::vector<std::string>> _keys;
   std::vector<std::vector<std::string>> _values;
   std::vector<std::vector<std::string>> _hashes;
-  std::mutex _keyval_mutex;
+  std::mutex _mutex;
 
 public:
   ChecksumCalc();

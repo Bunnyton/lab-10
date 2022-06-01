@@ -61,8 +61,6 @@ void ChecksumCalc::read(const CmdArgs& cmd,
   }
   delete _db;
   delete _pool;
-  _db = nullptr;
-  _pool = nullptr;
   _handles.clear();
 }
 
@@ -96,10 +94,10 @@ void ChecksumCalc::read_column(rocksdb::Iterator* iter, size_t i) {
   }
 
   // Save values
-  _keyval_mutex.lock();
+  _mutex.lock();
   _keys[i] = std::move(keys);
   _values[i] = std::move(values);
-  _keyval_mutex.unlock();
+  _mutex.unlock();
 }
 
 void ChecksumCalc::write(
@@ -130,7 +128,6 @@ void ChecksumCalc::write(
     if (!s.ok()) throw std::runtime_error(s.ToString());
   }
   delete _db;
-  _db = nullptr;
 }
 
 void ChecksumCalc::write_db() {
